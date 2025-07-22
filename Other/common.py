@@ -46,6 +46,7 @@ def handle_NULLs(df,columns):
 
     print('Replacing NULL values on Numeric Columns with "0" ' , end='')
     df_clean = df_string.fillna(0,subset = columns)
+    print('*******************************************************')
     print('Success!! ')
 
     return df_clean
@@ -64,6 +65,7 @@ def create_TransformedTime(df):
     df_timestamp = df.withColumn('Transformed_Time',
                       current_timestamp()
                       )
+    print('*******************************************************')
     print('Success!!')
     return df_timestamp
 

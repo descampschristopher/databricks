@@ -142,6 +142,7 @@ def write_Road_Data(StreamingDF,environment):
                     #.option("cloudFiles.partitionColumns", "Region_ID")
                     .outputMode('append')
                     .queryName('rawroadsWriteStream')
+                    .option("mergeSchema", "true")
                     .trigger(availableNow=True)
                     .toTable(f"`{environment}_catalog`.`bronze`.`raw_roads`"))
     
@@ -158,6 +159,7 @@ def write_Road_Data(StreamingDF,environment):
 
 
 Initglobalvarpath(env)
+print(landingzone)
 read_DF = read_Traffic_Data()
 write_Traffic_Data(read_DF,env)
 read_road_DF = read_roads_data()
