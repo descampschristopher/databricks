@@ -54,34 +54,18 @@ def handle_NULLs(df,columns):
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC ## -- Creating Transformed Time column
+# MAGIC ## -- Creating Time column
 # MAGIC
 
 # COMMAND ----------
 
-def create_TransformedTime(df):
+def create_columnTime(name,df):
     from pyspark.sql.functions import current_timestamp
-    print('Creating Transformed Time column : ',end='')
+    print('Creating {name} Time column : ',end='')
     df_timestamp = df.withColumn('Transformed_Time',
                       current_timestamp()
                       )
     print('*******************************************************')
-    print('Success!!')
-    return df_timestamp
-
-# COMMAND ----------
-
-# MAGIC %md
-# MAGIC ## -- Creating Extract_Time column
-
-# COMMAND ----------
-
-def create_Extract_Time(df):
-    from pyspark.sql.functions import current_timestamp
-    print('Creating Extract Time column : ',end='')
-    df_timestamp = df.withColumn('Extract_Time',
-                      current_timestamp()
-                      )
     print('Success!!')
     return df_timestamp
 

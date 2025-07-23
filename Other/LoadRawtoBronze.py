@@ -164,3 +164,8 @@ read_DF = read_Traffic_Data()
 write_Traffic_Data(read_DF,env)
 read_road_DF = read_roads_data()
 write_Road_Data(read_road_DF,env)
+
+# COMMAND ----------
+
+# MAGIC %sql
+# MAGIC select count(*) from dev_catalog.bronze.raw_roads
