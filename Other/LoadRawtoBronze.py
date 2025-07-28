@@ -59,13 +59,15 @@ def read_Traffic_Data():
         .option('header','true')
         .schema(schematraffic)
         .load(f'{landingzone}/raw_traffic/')
+        )
 
-        .withColumn("Extract_Time", current_timestamp()))
+    ret_rawTraffic_stream = create_columnTime('Extract_Time',rawTraffic_stream)
+     
     
     print('Reading Succcess !!')
     print('*******************')
 
-    return rawTraffic_stream
+    return ret_rawTraffic_stream
 
 # COMMAND ----------
 
@@ -119,13 +121,14 @@ def read_roads_data():
         .option('header','true')
         .schema(schemaroad)
         .load(f'{landingzone}/raw_roads/')
-
-        .withColumn("Extract_Time", current_timestamp()))
+    )
+    ret_rawroads_stream = create_columnTime('Extract_Time',rawroads_stream)
+   
     
     print('Reading Succcess Road Data!')
     print('*******************')
 
-    return rawroads_stream
+    return ret_rawroads_stream
 
 # COMMAND ----------
 
@@ -160,10 +163,14 @@ def write_Road_Data(StreamingDF,environment):
 
 Initglobalvarpath(env)
 print(landingzone)
-read_DF = read_Traffic_Data()
-write_Traffic_Data(read_DF,env)
+read_Traffic_DF = read_Traffic_Data()
+clean_Traffic_df = clean_spark_cols(read_Traffic_DF,'Traffic')
+
+write_Traffic_Data(clean_Traffic_df ,env)
+
 read_road_DF = read_roads_data()
-write_Road_Data(read_road_DF,env)
+clean_road_Data_cols = clean_spark_cols(read_road_DF,'Road')
+write_Road_Data(clean_road_Data_cols,env)
 
 # COMMAND ----------
 

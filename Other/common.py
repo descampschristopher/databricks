@@ -61,8 +61,8 @@ def handle_NULLs(df,columns):
 
 def create_columnTime(name,df):
     from pyspark.sql.functions import current_timestamp
-    print('Creating {name} Time column : ',end='')
-    df_timestamp = df.withColumn('Transformed_Time',
+    print(f'Creating time column : {name} ',end='')
+    df_timestamp = df.withColumn('{name}',
                       current_timestamp()
                       )
     print('*******************************************************')
@@ -81,3 +81,18 @@ def remove_Dups(df):
     df_dup = df.dropDuplicates()
     print('Success!')
     return df_dup
+
+# COMMAND ----------
+
+# MAGIC %md
+# MAGIC # Create column names that are compatible with Delta tables.
+
+# COMMAND ----------
+
+def clean_spark_cols(df,name):
+    print(f'Cleaning Spark Columns table name: {name} ',end='')
+    for col in df.columns:
+        df = df.withColumnRenamed(col, col.replace(" ", "_"))
+    print('Success!! ')
+    return df
+
